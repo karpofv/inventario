@@ -20,13 +20,13 @@ $foot_page      = ".:: Aplicaci&oacute;n Web ::: inventario - SISTEMA ::.";
 $host_system    = "";
 $auth_table     = 'usuarios'; // Nombre de la tabla que contendra los datos de los usuarios
 $usuarios_sesion = 'the_name_session';
-$redir          = 'http://karpofv.ddns.net/inventario/index.php';
-$ruta_base      = '//karpofv.ddns.net/inventario/';
+$redir          = 'http://localhost/inventario/index.php';
+$ruta_base      = '//localhost/inventario/';
 // Configuracion de Modulos Activos en en Sistema (0:Inactivo, 1:Activo)
 $mod_moodle  = 0;
 //Mod Chat
 global $absolute_uri;
-$absolute_uri   = 'http://karpofv.ddns.net/inventario/';
+$absolute_uri   = 'http://localhost/inventario/';
 $mod_chat       = 1;
 // Mensajes de error.
 $ruta_upload = $ruta_base."includes/uploads/";

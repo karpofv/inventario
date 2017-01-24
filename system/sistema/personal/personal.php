@@ -1,48 +1,47 @@
 <?php
+	$codigo = $_POST[codigo];
 	$cedula = $_POST[cedula];
-	$nombre = utf8_encode($_POST[nombre]);
-	$apellido = utf8_encode($_POST[apellido]);
+	$nombre = $_POST[nombre];
+	$apellido = $_POST[apellido];
+	$telefono = $_POST[telefono];
+	$correo = $_POST[correo];
 	$eliminar = $_POST[eliminar];
 	$editar = $_POST[editar];
 	$insertar = $_POST[insertar];
 	/*GUARDAR*/
+			paraTodos::showMsg("$codigo", "alert-danger");
 	if ($insertar=='1'){
-		$consul = paraTodos::arrayConsultanum("cedula", "registrados", "cedula=$cedula");
-		$consulu = paraTodos::arrayConsultanum("CEDULA", "asoc", "CEDULA='$cedula'");
+		$consul = paraTodos::arrayConsultanum("cedula", "personal", "per_cedula=$cedula");
 		if ($consul>0 and $consulu>0){
 			paraTodos::showMsg("Esta persona ya se encuentra registrada", "alert-danger");
 		} else{
-			paraTodos::arrayInserte("cedula, Nombres, Apellidos", "registrados", "$cedula, '$nombre', '$apellido'");
+			paraTodos::arrayInserte("per_cedula, per_nombres, per_apellidos, per_telefonos, per_correo", "personal", "$cedula, '$nombre', '$apellido', '$telefono', '$correo'");
 		}
 	}
 	/*MOSTRAR*/
 	if($editar == 1 and $nombre ==""){
-		$validaasoc = paraTodos::arrayConsultanum("*", "asoc a", "a.CEDULA='$cedula'");
-		if ($validaasoc>0){
-			paraTodos::showMsg("No puede modificar estos datos de un asociado", "alert-danger");
-			$cedula = "";
-		} else {
-			$consulta = paraTodos::arrayConsulta("*", "registrados u", "u.cedula=$cedula");
-			foreach($consulta as $row){
-				$nombre = $row[Nombres];
-				$apellido = $row[Apellidos];
-			}
+        $consulta = paraTodos::arrayConsulta("*", "personal p", "p.per_codigo=$codigo");
+		foreach($consulta as $row){
+		  $cedula = $row[per_cedula];
+		  $nombre = $row[per_nombres];
+		  $apellido = $row[per_apellidos];
+		  $telefono = $row[per_telefonos];
+		  $correo = $row[per_correo];
 		}
 	}
 	/*UPDATE*/
 	if($editar == 1 and $nombre !=""){
-		paraTodos::arrayUpdate("cedula=$cedula, Nombres='$nombre', Apellidos='$apellido'", "registrados", "cedula=$cedula");
+		paraTodos::arrayUpdate("per_cedula=$cedula, per_nombres='$nombre', per_apellidos='$apellido', per_telefonos='$telefono', per_correo='$correo'", "personal", "per_codigo=$codigo");
 	}
 	/*ELIMINAR*/
 	if ($eliminar !=''){
-		paraTodos::arrayDelete("Cedula=$cedula", "usuarios");
-		paraTodos::arrayDelete("cedula=$cedula", "registrados");
+		paraTodos::arrayDelete("per_codigo=$codigo", "personal");
 	}
 ?>
     <div class="content">
         <div>
             <div class="page-header-title">
-                <h4 class="page-title">Usuarios</h4> </div>
+                <h4 class="page-title">Personal</h4> </div>
         </div>
         <div class="page-content-wrapper ">
             <div class="container">
@@ -50,23 +49,35 @@
                     <div class="col-md-12">
                         <div class="panel panel-primary">
                             <div class="panel-body">
-                                <h4 class="m-b-30 m-t-0">Administrar usuarios</h4>
+                                <h4 class="m-b-30 m-t-0">Administrar personal</h4>
                                 <div class="row">
                                     <form class="form-horizontal">
                                         <div class="form-group" style="display: block;">
-                                            <label class="col-sm-1 control-label" for="cedula">Cédula</label>
+                                            <label class="col-sm-2 control-label" for="cedula">Cédula</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="cedula" type="number" value="<?php echo $cedula; ?>"> </div>
+                                                <input class="form-control" id="cedula" type="number" value="<?php echo $cedula; ?>">
+                                                <input class="form-control collapse" id="codigo" type="number" value="<?php echo $codigo; ?>">
+                                            </div>
                                         </div>
                                         <div class="form-group" style="display: block;">
-                                            <label class="col-sm-1 control-label" for="nombre">Nombres</label>
+                                            <label class="col-sm-2 control-label" for="nombre">Nombres</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="nombre" type="text" value="<?php echo $nombre;?>"> </div>
                                         </div>
                                         <div class="form-group" style="display: block;">
-                                            <label class="col-sm-1 control-label" for="apellido">Apellidos</label>
+                                            <label class="col-sm-2 control-label" for="apellido">Apellidos</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="apellido" type="text" value="<?php echo $apellido;?>"> </div>
+                                        </div>
+                                        <div class="form-group" style="display: block;">
+                                            <label class="col-sm-2 control-label" for="txttelefono">Teléfonos</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="txttelefono" type="text" value="<?php echo $telefono;?>"> </div>
+                                        </div>
+                                        <div class="form-group" style="display: block;">
+                                            <label class="col-sm-2 control-label" for="txtcorreo">Correo electrónico</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="txtcorreo" type="mail" value="<?php echo $correo;?>"> </div>
                                         </div>
                                         <div class="box-footer">
                                             <input id="enviar" type="button" value="Guardar" class="btn btn-primary col-md-offset-5" onclick="
@@ -78,9 +89,12 @@
 								type:'POST',
 								data:{
 									dmn 	: <?php echo $idMenut;?>,
+									codigo 	: $('#codigo').val(),
 									cedula 	: $('#cedula').val(),
 									nombre 	: $('#nombre').val(),
 									apellido: $('#apellido').val(),
+									telefono: $('#txttelefono').val(),
+									correo: $('#txtcorreo').val(),
 									insertar: 1,
 									ver 	: 2
 								},
@@ -89,6 +103,8 @@
 									$('#cedula').val('');
 									$('#nombre').val('');
 									$('#apellido').val('');
+									$('#txttelefono').val('');
+									$('#txtcorreo').val('');
 								},
 							}); return false;
 <?php
@@ -99,9 +115,12 @@
 								type:'POST',
 								data:{
 									dmn 	: <?php echo $idMenut;?>,
+									codigo 	: $('#codigo').val(),
 									cedula 	: $('#cedula').val(),
 									nombre 	: $('#nombre').val(),
 									apellido: $('#apellido').val(),
+									telefono: $('#txttelefono').val(),
+									correo: $('#txtcorreo').val(),
 									editar: 1,
 									ver 	: 2
 								},
@@ -110,6 +129,8 @@
 									$('#cedula').val('');
 									$('#nombre').val('');
 									$('#apellido').val('');
+									$('#txttelefono').val('');
+									$('#txtcorreo').val('');
 								},
 							}); return false;
 <?php
@@ -119,30 +140,36 @@
                                     </form>
                                 </div>
                                 <div class="row">
-                                    <table class="table table-hover" id="usuarios">
+                                    <table class="table table-hover" id="personal">
                                         <thead>
                                             <tr>
                                                 <td class="text-center"><strong>Cédula</strong></td>
                                                 <td class="text-center"><strong>Nombre y Apellido</strong></td>
-                                                <td class="text-center"><strong>Usuario</strong></td>
+                                                <td class="text-center"><strong>Teléfonos</strong></td>
+                                                <td class="text-center"><strong>Correo</strong></td>
+                                                <td class="text-center"><strong>Editar</strong></td>
+                                                <td class="text-center"><strong>Asig. Cargo</strong></td>
                                                 <td class="text-center"><strong>Editar</strong></td>
                                                 <td class="text-center"><strong>Eliminar</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
 <?php
-								            $consulsol = paraTodos::arrayConsulta("r.CEDULA, r.Nombres, r.Apellidos, u.Usuario", "registrados r left join usuarios u on u.Cedula=r.cedula", "r.CEDULA not in(select CEDULA FROM asoc)");
+								            $consulsol = paraTodos::arrayConsulta("*", "personal p", "1=1");
 								            foreach($consulsol as $row){
 ?>
                                             <tr>
                                                 <td class="text-center">
-                                                    <?php echo $row[CEDULA];?>
+                                                    <?php echo $row[per_cedula];?>
                                                 </td>
                                                 <td class="text-center">
-                                                    <?php echo utf8_decode($row[Nombres]." ".$row[Apellidos]);?>
+                                                    <?php echo utf8_decode($row[per_nombres]." ".$row[per_apellidos]);?>
                                                 </td>
                                                 <td class="text-center">
-                                                    <?php echo utf8_decode($row[Usuario]);?>
+                                                    <?php echo $row[per_telefonos];?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <?php echo $row[per_correo];?>
                                                 </td>
                                                 <td class="text-center">
                                                     <a href="javascript:void(0);" onclick="$.ajax({
@@ -150,7 +177,7 @@
                                                         type:'POST',
                                                         data:{
                                                             dmn 	: <?php echo $idMenut;?>,
-                                                            cedula 	: <?php echo $row[CEDULA];?>,
+                                                            codigo 	: <?php echo $row[per_codigo];?>,
                                                             editar 	: 1,
                                                             ver 	: 2
                                                         },
@@ -166,7 +193,23 @@
                                                         type:'POST',
                                                         data:{
                                                             dmn 	: <?php echo $idMenut;?>,
-                                                            cedula 	: <?php echo $row[CEDULA];?>,
+                                                            codigo 	: <?php echo $row[per_codigo];?>,
+                                                            act 	: 2,
+                                                            ver 	: 2
+                                                        },
+                                                        success : function (html) {
+                                                            $('#ventanaVer').html(html);
+                                                        },
+                                                    }); return false;"><i class="fa fa-edit"></i>
+									               </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="javascript:void(0);" onclick="$.ajax({
+                                                        url:'accion.php',
+                                                        type:'POST',
+                                                        data:{
+                                                            dmn 	: <?php echo $idMenut;?>,
+                                                            codigo 	: <?php echo $row[per_codigo];?>,
                                                             eliminar : 1,
                                                             ver 	: 2
                                                         },
@@ -191,7 +234,7 @@
         </div>
     </div>
     <script>
-        $('#usuarios').DataTable({
+        $('#personal').DataTable({
             "language": {
                 "url": "<?php echo $ruta_base;?>assets/js/Spanish.json"
             }
