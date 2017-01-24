@@ -12,7 +12,11 @@
     <link rel="shortcut icon" href="<?php echo $ruta_base;?>assets/images/favicon.ico">
     <link href="<?php echo $ruta_base;?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $ruta_base;?>assets/css/icons.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $ruta_base;?>assets/css/style.css" rel="stylesheet" type="text/css"> </head>
+    <link href="<?php echo $ruta_base;?>assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $ruta_base;?>assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+
+    <script src="<?php echo $ruta_base;?>assets/js/jquery.min.js"></script>
+</head>
 
 <body>
     <div id="wrapper">

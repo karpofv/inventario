@@ -26,7 +26,7 @@ if ($permiso_accion['S']==1) {
         </div>
         <?php
         if ($permiso_accion['I']==1) { ?>
-        <a onclick="$.ajax({ type: 'POST', url: 'accion.php', ajaxSend: $('#AsignarPermiso').html(cargando),
+        <a onclick="$.ajax({ type: 'POST', url: 'controller.php',
             data: 'idsubmenu=<?php echo $idsubmenu; ?>&CedulaPerm=<?php echo $_POST[CedulaPerm]; ?>&bb=1&M=3'+'&Estado='+$('#Estado').val()+'&Municipio='+$('#Municipio').val()+'&Parroquia='+$('#Parroquia').val(),
             success: function(html) { $('#AsignarPermiso').html(html); },
             error: function(xhr,msg,excep) { alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep); }
@@ -103,7 +103,7 @@ if ($permiso_accion['S']==1) {
           if (perf != ''){
             $.ajax({
               type: 'POST',
-              url:  'accion.php', ajaxSend: $('#Estadoc').html(cargando),
+              url:  'controller.php',
               data: 'ciudad='+perf+'&lf=2&idsubmenu=<?php echo $idsubmenu; ?>&idsubmenur=2&PQuien=2&PQ=99',
               success: function(html) { $('#Estadoc').html(html);}
             });
@@ -116,7 +116,7 @@ if ($permiso_accion['S']==1) {
           if (perf != ''){
             $.ajax({
               type: 'POST',
-              url:  'accion.php', ajaxSend: $('#Municipioc').html(cargando),
+              url:  'controller.php',
               data: 'estado='+perf+'&lf=2&idsubmenu=<?php echo $idsubmenu; ?>&CedulaPerm=<?php echo $_POST[CedulaPerm]; ?>&idsubmenur=2&PQuien=17&PQ=99',
               success: function(html) { $('#Municipioc').html(html);}
             });

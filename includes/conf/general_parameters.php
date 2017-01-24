@@ -14,21 +14,22 @@
  * @date        21/06/2009
 */
 
-$empresa_name   = "CREDITO"; // Nombre de la empresa
-$system_title   = "CREDITO | SISTEMA"; //titulo del sistema ::: TEC
-$foot_page      = ".:: Aplicaci&oacute;n Web ::: CREDITO ::.";
+$empresa_name   = "inventario"; // Nombre de la empresa
+$system_title   = "inventario | SISTEMA"; //titulo del sistema ::: TEC
+$foot_page      = ".:: Aplicaci&oacute;n Web ::: inventario - SISTEMA ::.";
 $host_system    = "";
 $auth_table     = 'usuarios'; // Nombre de la tabla que contendra los datos de los usuarios
 $usuarios_sesion = 'the_name_session';
-$redir          = 'http://localhost/inventario/index.php';
-$ruta_base      = '//localhost/inventario/';
+$redir          = 'http://karpofv.ddns.net/inventario/index.php';
+$ruta_base      = '//karpofv.ddns.net/inventario/';
 // Configuracion de Modulos Activos en en Sistema (0:Inactivo, 1:Activo)
 $mod_moodle  = 0;
 //Mod Chat
 global $absolute_uri;
-$absolute_uri   = 'http://localhost/inventario/';
+$absolute_uri   = 'http://karpofv.ddns.net/inventario/';
 $mod_chat       = 1;
 // Mensajes de error.
+$ruta_upload = $ruta_base."includes/uploads/";
 $ruta_album = "";
 $ruta_album_uploader = "../../fotoAlbum/";
 $ruta_album_perfil = "../fotoperf";
@@ -47,4 +48,3 @@ $error_login_ms[7] = "El C&oacute;digo aleatorio que introdujo no coincide con l
 $error_login_ms[8] = "No introdujo el C&oacute;digo aleatorio";
 $error_login_ms[9] = "Su sesi&oacute;n expir&oacute; o a&uacute;n no se ha identificado.";
 $error_login_ms[10] = "Acceso incorrecto";
-?>
