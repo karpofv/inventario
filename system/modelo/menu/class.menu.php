@@ -57,7 +57,7 @@ class Menu
                 $filasMenuM = $consultasMenu->arrayConsulta("nombre_menu", "menu_master", "id=$filasMenud[ConexMenuMaster]");
                 foreach ($filasMenuM as $filasMenudM) {
                     ?><li class="divider"></li>
-                <li class="treeview"><a><i class="glyph-icon icon-laptop"></i><span style="color: #FFFFFF;"><?php echo $filasMenudM[nombre_menu]; ?></span></a></li>
+                <li class="treeview"><a><i class="glyph-icon icon-laptop"></i><span style="color: #FFFFFF;"><?php echo utf8_decode($filasMenudM[nombre_menu]); ?></span></a></li>
                 <li class="divider"></li>
                 <?php
 
@@ -74,7 +74,7 @@ class Menu
                 } else {
                     $empresaSMenu = $filasSubMenud['menu'];
                 } ?>
-                            <li class="treeview"><a title="Pulse para ejecutar (<?php echo $filasSubMenud['menu']; ?>)"
+                            <li class="treeview"><a title="Pulse para ejecutar (<?php echo utf8_decode($filasSubMenud['menu']); ?>)"
                             onclick="$.ajax({
                                         type: 'POST',
                                         url: 'accion.php',

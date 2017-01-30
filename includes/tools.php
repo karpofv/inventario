@@ -80,7 +80,7 @@ class paraTodos
         if ($msg<>'') {
             ?>
             <div class="<?php echo $type ?>" id="alerta-msg">
-            <a class="close" data-dismiss="alert">&times;</a>
+            <a class="close" data-dismiss="alert" onclick="cerrar()">&times;</a>
             <strong>Accion!</strong> <?php echo $msg ?>
             </div>
             <?php

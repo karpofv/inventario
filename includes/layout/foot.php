@@ -1,4 +1,10 @@
 </div>
+<script>
+	function cerrar(){
+		$("#alerta-msg").fadeOut(1000);
+		$("#alerta-msg").addClass("collapse");
+	}
+</script>
 <script src="<?php echo $ruta_base;?>assets/js/bootstrap.min.js"></script>
 <script src="<?php echo $ruta_base;?>assets/js/modernizr.min.js"></script>
 <script src="<?php echo $ruta_base;?>assets/js/detect.js"></script>

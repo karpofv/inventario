@@ -3622,3 +3622,11 @@ File: Responsive
     display: none !important;
   }
 }
+
+#alerta-msg {
+    margin-top: 70px;
+    height: 50px;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: -70px;
+}

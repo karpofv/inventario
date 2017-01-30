@@ -1,7 +1,6 @@
 <div class="left side-menu">
     <div class="sidebar-inner slimscrollleft">
         <div class="user-details">
-            <div class="text-center"> <img src="<?php echo $ruta_base;?>assets/images/users/avatar-1.jpg" alt="" class="img-circle"></div>
             <div class="user-info">
                 <div class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['nombre_usuario'];?></a>
                     <ul class="dropdown-menu">

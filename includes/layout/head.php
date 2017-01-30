@@ -3,7 +3,7 @@
 <!-- Mirrored from themesdesign.in/webadmin_1.1/layouts/blue/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 05 Dec 2016 17:33:32 GMT -->
 
 <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title>WebAdmin - Responsive Admin Dashboard Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="Admin Dashboard" name="description" />

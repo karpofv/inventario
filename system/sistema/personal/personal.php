@@ -5,6 +5,8 @@
 	$apellido = $_POST[apellido];
 	$telefono = $_POST[telefono];
 	$correo = $_POST[correo];
+	$cargo = $_POST[car];
+	$dep = $_POST[dep];
 	$eliminar = $_POST[eliminar];
 	$editar = $_POST[editar];
 	$insertar = $_POST[insertar];
@@ -15,7 +17,7 @@
 		if ($consul>0 and $consulu>0){
 			paraTodos::showMsg("Esta persona ya se encuentra registrada", "alert-danger");
 		} else{
-			paraTodos::arrayInserte("per_cedula, per_nombres, per_apellidos, per_telefonos, per_correo", "personal", "$cedula, '$nombre', '$apellido', '$telefono', '$correo'");
+			paraTodos::arrayInserte("per_cedula, per_nombres, per_apellidos, per_telefonos, per_correo, per_cargo, per_departamento", "personal", "$cedula, '$nombre', '$apellido', '$telefono', '$correo', $cargo, $dep");
 		}
 	}
 	/*MOSTRAR*/
@@ -31,7 +33,7 @@
 	}
 	/*UPDATE*/
 	if($editar == 1 and $nombre !=""){
-		paraTodos::arrayUpdate("per_cedula=$cedula, per_nombres='$nombre', per_apellidos='$apellido', per_telefonos='$telefono', per_correo='$correo'", "personal", "per_codigo=$codigo");
+		paraTodos::arrayUpdate("per_cedula=$cedula, per_nombres='$nombre', per_apellidos='$apellido', per_telefonos='$telefono', per_correo='$correo', per_cargo='$cargo', per_departamento='$dep'", "personal", "per_codigo=$codigo");
 	}
 	/*ELIMINAR*/
 	if ($eliminar !=''){
@@ -79,6 +81,28 @@
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="txtcorreo" type="mail" value="<?php echo $correo;?>"> </div>
                                         </div>
+                                        <div class="form-group" style="display: block;">
+                                            <label class="col-sm-2 control-label" for="txtcorreo">Cargo</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="selcar">
+                                                    <option value="0">Seleccione un cargo</option>
+                                                <?php
+                                                combos::CombosSelect("1", "$cargo", "car_codigo, car_descripcion", "cargos", "car_codigo", "car_descripcion", "1=1");
+                                                ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="display: block;">
+                                            <label class="col-sm-2 control-label" for="txtcorreo">Departamento</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="seldep">
+                                                    <option value="0">Seleccione un departamento</option>
+                                                <?php
+                                                combos::CombosSelect("1", "$dep", "dep_codigo, dep_descripcion", "departamento", "dep_codigo", "dep_descripcion", "1=1");
+                                                ?>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="box-footer">
                                             <input id="enviar" type="button" value="Guardar" class="btn btn-primary col-md-offset-5" onclick="
 <?php
@@ -95,6 +119,8 @@
 									apellido: $('#apellido').val(),
 									telefono: $('#txttelefono').val(),
 									correo: $('#txtcorreo').val(),
+									dep: $('#seldep').val(),
+									car: $('#selcar').val(),
 									insertar: 1,
 									ver 	: 2
 								},
@@ -121,6 +147,8 @@
 									apellido: $('#apellido').val(),
 									telefono: $('#txttelefono').val(),
 									correo: $('#txtcorreo').val(),
+									dep: $('#seldep').val(),
+									car: $('#selcar').val(),
 									editar: 1,
 									ver 	: 2
 								},
@@ -147,15 +175,15 @@
                                                 <td class="text-center"><strong>Nombre y Apellido</strong></td>
                                                 <td class="text-center"><strong>Teléfonos</strong></td>
                                                 <td class="text-center"><strong>Correo</strong></td>
-                                                <td class="text-center"><strong>Editar</strong></td>
-                                                <td class="text-center"><strong>Asig. Cargo</strong></td>
+                                                <td class="text-center"><strong>Cargo</strong></td>
+                                                <td class="text-center"><strong>Dept.</strong></td>
                                                 <td class="text-center"><strong>Editar</strong></td>
                                                 <td class="text-center"><strong>Eliminar</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
 <?php
-								            $consulsol = paraTodos::arrayConsulta("*", "personal p", "1=1");
+								            $consulsol = paraTodos::arrayConsulta("*", "personal p, cargos c, departamento d", "p.per_cargo=c.car_codigo and p.per_departamento=d.dep_codigo");
 								            foreach($consulsol as $row){
 ?>
                                             <tr>
@@ -172,6 +200,12 @@
                                                     <?php echo $row[per_correo];?>
                                                 </td>
                                                 <td class="text-center">
+                                                    <?php echo $row[car_descripcion];?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <?php echo $row[dep_descripcion];?>
+                                                </td>
+                                                <td class="text-center">
                                                     <a href="javascript:void(0);" onclick="$.ajax({
                                                         url:'accion.php',
                                                         type:'POST',
@@ -183,22 +217,6 @@
                                                         },
                                                         success : function (html) {
                                                             $('#page-content').html(html);
-                                                        },
-                                                    }); return false;"><i class="fa fa-edit"></i>
-									               </a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="javascript:void(0);" onclick="$.ajax({
-                                                        url:'accion.php',
-                                                        type:'POST',
-                                                        data:{
-                                                            dmn 	: <?php echo $idMenut;?>,
-                                                            codigo 	: <?php echo $row[per_codigo];?>,
-                                                            act 	: 2,
-                                                            ver 	: 2
-                                                        },
-                                                        success : function (html) {
-                                                            $('#ventanaVer').html(html);
                                                         },
                                                     }); return false;"><i class="fa fa-edit"></i>
 									               </a>
