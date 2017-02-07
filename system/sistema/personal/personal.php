@@ -11,10 +11,9 @@
 	$editar = $_POST[editar];
 	$insertar = $_POST[insertar];
 	/*GUARDAR*/
-			paraTodos::showMsg("$codigo", "alert-danger");
 	if ($insertar=='1'){
 		$consul = paraTodos::arrayConsultanum("cedula", "personal", "per_cedula=$cedula");
-		if ($consul>0 and $consulu>0){
+		if ($consul>0){
 			paraTodos::showMsg("Esta persona ya se encuentra registrada", "alert-danger");
 		} else{
 			paraTodos::arrayInserte("per_cedula, per_nombres, per_apellidos, per_telefonos, per_correo, per_cargo, per_departamento", "personal", "$cedula, '$nombre', '$apellido', '$telefono', '$correo', $cargo, $dep");

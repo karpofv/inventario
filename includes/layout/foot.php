@@ -4,6 +4,9 @@
 		$("#alerta-msg").fadeOut(1000);
 		$("#alerta-msg").addClass("collapse");
 	}
+    function cerrarmodal(){
+		$("#ventanaVer").html('');
+	}
 </script>
 <script src="<?php echo $ruta_base;?>assets/js/bootstrap.min.js"></script>
 <script src="<?php echo $ruta_base;?>assets/js/modernizr.min.js"></script>

@@ -40,20 +40,6 @@
 			paraTodos::arrayInserte("est_depcodigo, est_descripcion, est_ip, est_mac, est_switch, est_ptswitch, est_patchp, est_ptpatchp", "estacion", "$dep, '$descrip', '$ip', '$mac', '$switch', '$ptswitch', '$patchp', '$ptpatchp'");
 		}
 	}
-	/*MOSTRAR*/
-	if($editar == 1 and $descrip ==""){
-        $consulta = paraTodos::arrayConsulta("*", "estacion e, departamento d", "e.est_depcodigo=d.dep_codigo and e.est_codigo=$codigo");
-		foreach($consulta as $row){
-            $dep = $row[dep_codigo];
-            $descrip = $row[est_descripcion];
-            $ip = $row[est_ip];
-            $mac = $row[est_mac];
-            $switch = $row[est_switch];
-            $ptswitch = $row[est_ptswitch];
-            $patchp = $row[est_patchp];
-            $ptpatchp = $row[est_ptpatchp];
-		}
-	}
 	/*UPDATE*/
 	if($editar == 1 and $descrip !=""){
 		$consulip = paraTodos::arrayConsultanum("est_descripcion", "estacion", "est_ip='$ip' and est_codigo<>$codigo");
@@ -67,13 +53,8 @@
             $cantidad = 1;
         }
         $consuls = paraTodos::arrayConsultanum("est_descripcion", "estacion", "est_switch='$switch' and est_ptswitch='$ptswitch' and est_codigo<>$codigo");
-        if ($consulip>0){
-            $mensaje = "Ya Existe una estacion asociada a este puerto del swit  ch";
-            $cantidad = 1;
-        }
-        $consulip = paraTodos::arrayConsultanum("est_descripcion", "estacion", "est_mac='$mac' and est_codigo<>$codigo");
-        if ($consulip>0){
-            $mensaje = "Ya Existe una estacion asociada a esta mac";
+        if ($consuls>0){
+            $mensaje = "Ya Existe una estacion asociada a este puerto del switch";
             $cantidad = 1;
         }
 		if ($cantidad>0){
@@ -82,6 +63,20 @@
             paraTodos::arrayUpdate("est_depcodigo='$dep', est_descripcion='$descrip', est_ip='$ip', est_mac='$mac', est_switch='$switch', est_ptswitch='$ptswitch', est_patchp='$patchp', est_ptpatchp='$ptpatchp'", "estacion", "est_codigo=$codigo");
             $editar="";
         }
+	}
+	/*MOSTRAR*/
+	if($editar == 1 and $descrip ==""){
+        $consulta = paraTodos::arrayConsulta("*", "estacion e, departamento d", "e.est_depcodigo=d.dep_codigo and e.est_codigo=$codigo");
+		foreach($consulta as $row){
+            $dep = $row[dep_codigo];
+            $descrip = $row[est_descripcion];
+            $ip = $row[est_ip];
+            $mac = $row[est_mac];
+            $switch = $row[est_switch];
+            $ptswitch = $row[est_ptswitch];
+            $patchp = $row[est_patchp];
+            $ptpatchp = $row[est_ptpatchp];
+		}
 	}
 	/*ELIMINAR*/
 	if ($eliminar !=''){
@@ -237,6 +232,7 @@
                                                 <td class="text-center"><strong>Eliminar</strong></td>
                                                 <td class="text-center"><strong>Editar</strong></td>
                                                 <td class="text-center"><strong>Asig. Responsable</strong></td>
+                                                <td class="text-center"><strong>Asig. Componente</strong></td>
                                                 <td class="text-center"><strong>Departamento</strong></td>
                                                 <td class="text-center"><strong>Descripción</strong></td>
                                                 <td class="text-center"><strong>Ip</strong></td>
@@ -291,14 +287,30 @@
                                                         type:'POST',
                                                         data:{
                                                             dmn 	: <?php echo $idMenut;?>,
-                                                            codigo 	: <?php echo $row[est_codigo];?>,
+                                                            codigoe 	: <?php echo $row[est_codigo];?>,
                                                             act 	: 2,
                                                             ver 	: 2
                                                         },
                                                         success : function (html) {
                                                             $('#ventanaVer').html(html);
                                                         },
-                                                    }); return false;"><i class="fa fa-eraser"></i>
+                                                    }); return false;"><i class="fa fa-plus-square"></i>
+									               </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="javascript:void(0);" onclick="$.ajax({
+                                                        url:'accion.php',
+                                                        type:'POST',
+                                                        data:{
+                                                            dmn 	: <?php echo $idMenut;?>,
+                                                            codigoe 	: <?php echo $row[est_codigo];?>,
+                                                            act 	: 3,
+                                                            ver 	: 2
+                                                        },
+                                                        success : function (html) {
+                                                            $('#ventanaVer').html(html);
+                                                        },
+                                                    }); return false;"><i class="fa fa-plus-square"></i>
 									               </a>
                                                 </td>
                                                 <td class="text-center">
