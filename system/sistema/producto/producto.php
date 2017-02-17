@@ -1,34 +1,45 @@
 <?php
 	$codigo = $_POST[codigo];
 	$comp = $_POST[comp];
+	$fechain = $_POST[fechain];
 	$descrip = $_POST[descrip];
 	$marca = $_POST[marca];
 	$modelo = $_POST[modelo];
+	$serial = $_POST[serial];
+	$bien = $_POST[bien];
 	$eliminar = $_POST[eliminar];
 	$editar = $_POST[editar];
 	$insertar = $_POST[insertar];
 	/*GUARDAR*/
 	if ($insertar=='1'){
 		$consul = paraTodos::arrayConsultanum("comp_descripcion", "componente", "comp_nombre='$comp' and comp_modelo='$modelo' and comp_marca='$marca'");
-		if ($consul>0 and $consulu>0){
+		if ($consul>0){
 			paraTodos::showMsg("Este existe un componente bajo esta marca y modelo", "alert-danger");
 		} else{
-			paraTodos::arrayInserte("comp_nombre, comp_descripcion, comp_marca, comp_modelo", "componente", "'$comp', '$descrip', '$marca', '$modelo'");
+            $consul = paraTodos::arrayConsultanum("comp_serial", "componente", "comp_serial='$serial'");
+            if ($consul>0){
+			 paraTodos::showMsg("Nº de serial ya registrado", "alert-danger");
+            } else {
+                paraTodos::arrayInserte("comp_nombre, comp_fechain, comp_descripcion, comp_marca, comp_modelo, comp_serial, comp_biennac", "componente", "'$comp', '$fechain', '$descrip', '$marca', '$modelo', '$serial', '$bien'");
+            }
 		}
 	}
 	/*MOSTRAR*/
 	if($editar == 1 and $comp ==""){
         $consulta = paraTodos::arrayConsulta("*", "componente c", "c.comp_codigo=$codigo");
 		foreach($consulta as $row){
+		  $fechain = $row[comp_fechain];
 		  $descrip = $row[comp_descripcion];
 		  $marca = $row[comp_marca];
 		  $modelo = $row[comp_modelo];
 		  $comp = $row[comp_nombre];
+		  $serial = $row[comp_serial];
+		  $bien = $row[comp_biennac];
 		}
 	}
 	/*UPDATE*/
 	if($editar == 1 and $comp !=""){
-		paraTodos::arrayUpdate("comp_nombre='$comp', comp_descripcion='$descrip', comp_marca='$marca', comp_modelo='$modelo'", "componente", "comp_codigo=$codigo");
+		paraTodos::arrayUpdate("comp_nombre='$comp',comp_fechain='$fechain', comp_descripcion='$descrip', comp_marca='$marca', comp_modelo='$modelo', comp_serial='$serial', comp_biennac='$bien'", "componente", "comp_codigo=$codigo");
 	}
 	/*ELIMINAR*/
 	if ($eliminar !=''){
@@ -50,10 +61,28 @@
                                 <div class="row">
                                     <form class="form-horizontal">
                                         <div class="form-group" style="display: block;">
+                                            <label class="col-sm-2 control-label" for="fechain">Fecha de incorporación</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="fechain" type="date" value="<?php echo $fechain; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="display: block;">
                                             <label class="col-sm-2 control-label" for="comp">Componente</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="comp" type="text" value="<?php echo $comp; ?>">
                                                 <input class="form-control collapse" id="codigo" type="number" value="<?php echo $codigo; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="display: block;">
+                                            <label class="col-sm-2 control-label" for="serial">Serial</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="serial" type="text" value="<?php echo $serial; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="display: block;">
+                                            <label class="col-sm-2 control-label" for="bien">Nº de bien</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="bien" type="text" value="<?php echo $bien; ?>">
                                             </div>
                                         </div>
                                         <div class="form-group" style="display: block;">
@@ -85,10 +114,13 @@
 								data:{
 									dmn        : <?php echo $idMenut;?>,
 									codigo     : $('#codigo').val(),
+									fechain     : $('#fechain').val(),
 									comp       : $('#comp').val(),
 									descrip    : $('#descrip').val(),
 									marca      : $('#marca').val(),
 									modelo     : $('#modelo').val(),
+									serial     : $('#serial').val(),
+									bien     : $('#bien').val(),
 									insertar   : 1,
 									ver        : 2
 								},
@@ -109,10 +141,15 @@
 								data:{
 									dmn        : <?php echo $idMenut;?>,
 									codigo 	   : $('#codigo').val(),
+									fechain     : $('#fechain').val(),
+									serial     : $('#serial').val(),
+									bien       : $('#bien').val(),
 									descrip    : $('#descrip').val(),
 									comp       : $('#comp').val(),
 									marca      : $('#marca').val(),
 									modelo     : $('#modelo').val(),
+									serial     : $('#serial').val(),
+									bien     : $('#bien').val(),
 									editar     : 1,
 									ver        : 2
 								},
@@ -134,6 +171,9 @@
                                     <table class="table table-hover" id="personal">
                                         <thead>
                                             <tr>
+                                                <td class="text-center"><strong>Fec. Incorp.</strong></td>
+                                                <td class="text-center"><strong>Serial</strong></td>
+                                                <td class="text-center"><strong>Nº de bien nacional</strong></td>
                                                 <td class="text-center"><strong>Componente</strong></td>
                                                 <td class="text-center"><strong>Marca</strong></td>
                                                 <td class="text-center"><strong>Modelo</strong></td>
@@ -144,10 +184,19 @@
                                         </thead>
                                         <tbody>
 <?php
-								            $consulsol = paraTodos::arrayConsulta("*", "componente", "1=1");
+								            $consulsol = paraTodos::arrayConsulta("*", "componente", "comp_estado='ACTIVO'");
 								            foreach($consulsol as $row){
 ?>
                                             <tr>
+                                                <td class="text-center">
+                                                    <?php echo paraTodos::convertDate($row[comp_fechain]);?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <?php echo $row[comp_serial];?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <?php echo $row[comp_biennac];?>
+                                                </td>
                                                 <td class="text-center">
                                                     <?php echo $row[comp_nombre];?>
                                                 </td>

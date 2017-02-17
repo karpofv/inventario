@@ -34,30 +34,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <label class="control-label" for="cedulaa">Cédula</label>
-                            <input class="form-control" id="cedulaa" type="number" min="1">
-                        </div>
-                        <div class="col-sm-4">
-                            <br>
-                            <button type="button" class="btn btn-default" id="asignar" onclick="$.ajax({
-                                                        url:'accion.php',
-                                                        type:'POST',
-                                                        data:{
-                                                            dmn 	: <?php echo $idMenut;?>,
-                                                            codigoe 	: <?php echo $codigoe;?>,
-                                                            cedula 	: $('#cedulaa').val(),
-                                                            act 	: 2,
-                                                            asignar : 1,
-                                                            ver 	: 2
-                                                        },
-                                                        success : function (html) {
-                                                            $('#ventanaVer').html(html);
-                                                        },
-                                                    }); return false;">Asignar</button>
-                        </div>
-                    </div>
+                    <table
                 </div>
                 <div class="divider"></div>
                 <div class="row">
@@ -111,3 +88,18 @@
         </div>
     </div>
 </div>
+$.ajax({
+                                                        url:'accion.php',
+                                                        type:'POST',
+                                                        data:{
+                                                            dmn 	: <?php echo $idMenut;?>,
+                                                            codigoe 	: <?php echo $codigoe;?>,
+                                                            cedula 	: $('#cedulaa').val(),
+                                                            act 	: 2,
+                                                            asignar : 1,
+                                                            ver 	: 2
+                                                        },
+                                                        success : function (html) {
+                                                            $('#ventanaVer').html(html);
+                                                        },
+                                                    }); return false;
