@@ -20,7 +20,7 @@
             if ($consul>0){
 			 paraTodos::showMsg("Nº de serial ya registrado", "alert-danger");
             } else {
-                paraTodos::arrayInserte("comp_nombre, comp_fechain, comp_descripcion, comp_marca, comp_modelo, comp_serial, comp_biennac", "componente", "'$comp', '$fechain', '$descrip', '$marca', '$modelo', '$serial', '$bien'");
+                paraTodos::arrayInserte("comp_nombre, comp_fechain, comp_descripcion, comp_marca, comp_modelo, comp_serial, comp_biennac, comp_estado", "componente", "'$comp', '$fechain', '$descrip', '$marca', '$modelo', '$serial', '$bien', 'ACTIVO'");
             }
 		}
 	}

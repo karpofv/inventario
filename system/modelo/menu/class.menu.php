@@ -64,7 +64,7 @@ class Menu
                 }
             } ?>
             <li class="treeview">
-                <a href="#" title="<?php echo $filasMenud['menu']; ?>"><i class="glyph-icon icon-linecons-cloud"></i> <span><?php echo $empresaMenu; ?></span></a>
+                <a href="#" title="<?php echo $filasMenud['menu']; ?>"><i class="mdi mdi-album"></i> <span><?php echo $empresaMenu; ?></span></a>
                 <ul class="treeview-menu">
                     <?php
                     $filasSubMenu = $consultasMenu->arrayConsulta("DISTINCT m_menu_emp_sub_menj.Url_1,m_menu_emp_sub_menj.menu,m_menu_emp_sub_menj.id", "m_menu_emp_sub_menj,perfiles_det", "m_menu_emp_sub_menj.id=perfiles_det.Submenu AND perfiles_det.Menu=$filasMenud[id] AND perfiles_det.IdPerfil=$nivel AND perfiles_det.S=1 Order By m_menu_emp_sub_menj.orden,m_menu_emp_sub_menj.menu");

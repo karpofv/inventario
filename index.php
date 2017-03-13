@@ -15,10 +15,8 @@ if ($_GET[logaut] == '1') {
     <div class="wrapper-page">
         <div class="panel panel-color panel-primary panel-pages">
             <div class="panel-body">
-                <h3 class="text-center m-t-0 m-b-15"> <a href="index.html" class="logo logo-admin"><span>Inv</span>entario</a></h3>
-                <h4 class="text-muted text-center m-t-0"><b>Ingresar</b></h4>
-                <form action="index2.php" id="login-validation" class="col-md-12 center-margin" method="post" enctype="multipart/form-data">
-                <!-- notificacion de error -->
+                <img src="<?php $ruta_base?>assets/images/logo.jpg" class="img-responsive">
+                <h3 class="text-center m-t-0 m-b-15"> <a href="index.php" class="logo logo-admin"><span>Inv</span>entario</a></h3>
                 <?php
                     if (isset($_GET['error_login'])) {
                         $error = $_GET['error_login']; ?>
@@ -29,7 +27,11 @@ if ($_GET[logaut] == '1') {
                     <?php
                     }
 ?>
-                        <!-- fin notificacion de error -->
+
+                <h4 class="text-muted text-center m-t-0"><b>Ingresar</b></h4>
+                <form action="index2.php" id="login-validation" class="col-md-12 center-margin" method="post" enctype="multipart/form-data">
+                <!-- notificacion de error -->
+               <!-- fin notificacion de error -->
                         <div id="login-form" class="content-box bg-default">
                             <div class="content-box-wrapper pad20A">
                                 <br>

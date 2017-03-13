@@ -1,6 +1,7 @@
 <div class="topbar">
     <div class="topbar-left">
         <div class="text-center"> <a href="index.html" class="logo"><span>Inv</span>entario</a> <a href="javascript:void(0)" class="logo-sm"><span>I</span></a></div>
+        <img src="../assets/images/logo.jpg" class="img-responsive">
     </div>
     <div class="navbar navbar-default" role="navigation">
         <div class="container">
@@ -23,10 +24,6 @@
                             <span class="profile-username"> <?php echo $_SESSION['nombre_usuario'];?> <br/> <small></small> </span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="javascript:void(0)"><span class="badge badge-success pull-right"></span>  Cambiar Contraseña </a>
-                            </li>
-                            <li class="divider"></li>
                             <li><a href="accion.php?org=44&salir=1"> Salir</a></li>
                         </ul>
                     </li>
